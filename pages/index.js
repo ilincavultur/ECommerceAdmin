@@ -1,19 +1,21 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import {signIn, signOut, useSession} from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
     const { data: session } = useSession()
-    if(session) {
-        return <>
-            Signed in as {session.user.email} <br/>
-            <button onClick={() => signOut()}>Sign out</button>
-        </>
-    }
+  if(session) {
     return <>
-        Not signed in <br/>
-        <button onClick={() => signIn()}>Sign in</button>
+      Signed in as {session.user.email} <br/>
+      <button onClick={() => signOut()}>Sign out</button>
     </>
+  }
+  return <>
+    Not signed in <br/>
+    <button onClick={() => signIn()}>Sign in</button>
+  </>
 }
+
