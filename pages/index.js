@@ -2,33 +2,26 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useSession, signIn, signOut } from "next-auth/react"
 import Nav from "@/components/Nav";
+import Layout from "@/components/Layout";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-
-    const { data: session } = useSession()
-  if(session) {
+    const {data: session} = useSession();
     return (
-        //bg-blue-900 min-h-screen
-        <div className="bg-blue-900 min-h-screen">
-            <Nav/>
-          <div className="text-center w-full">
-            Signed in as {session.user.email} <br/>
-            <button onClick={() => signOut()}>Sign out</button>
-          </div>
-        </div>
+        <Layout>
+            <div className="text-blue-900 flex justify-between">
+                <h2>
+                    Hello, <b>{session?.user?.email}    </b>
+                </h2>
+                <div className="flex bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
+                    <img src={session?.user?.image} alt="" className="w-8 h-8"/>
+                    <span className="py-1 px-2">
+                    {session?.user?.name}
+                    </span>
+                </div>
+            </div>
+        </Layout>
     )
-
-  }
-  return (
-      <div className="bg-blue-900 w-screen h-screen flex items-center">
-        <div>
-          Not signed in <br/>
-          <button onClick={() => signIn()}>Sign in</button>
-        </div>
-      </div>
-  )
-
 }
 
