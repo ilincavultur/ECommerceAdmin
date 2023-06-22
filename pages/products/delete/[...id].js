@@ -20,7 +20,9 @@ export default function DeleteProductPage() {
     )
 
     function goBack() {
-        router.push('/products');
+        router.push('/products').then(r =>
+            console.log(r.valueOf())
+        );
     }
 
     async function deleteProduct() {
