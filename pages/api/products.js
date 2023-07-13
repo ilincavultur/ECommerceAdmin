@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 import clientPromise from "@/lib/mongodb";
 import {Product} from "@/models/Product";
 import {mongooseConnect} from "@/lib/mongoose";
+import {isAdminRequest} from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(req, res) {
     const {method} = req;
     await mongooseConnect();
+    await isAdminRequest(req, res);
+
     if (method === 'GET') {
         if (req.query?.id) {
             res.json(await Product.findOne({_id:req.query.id}))
